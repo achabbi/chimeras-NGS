@@ -11,11 +11,9 @@ import sequences as sq
 
 def filter_quality(filename):
 	good_quality = []
-
 	for rec in SeqIO.parse(filename, 'fastq'):
 		if min(rec.letter_annotations['phred_quality']) >= 20:
 			good_quality.append(rec)
-
 	return good_quality
 
 
@@ -52,23 +50,19 @@ def find_matches(forward, reverse):
 def combine_forward_reverse(forward, reverse):
 	# input is dictionary of histogram type ({sequence1: frequency, sequence2: frequency, etc})
 	final_dict = forward.copy()
-
 	for seq_reverse, count in reverse.items():
 		final_dict[seq_reverse.reverse_complement()] += count
-
 	return final_dict
 
 
 def combine_dictionaries(stock1, stock2):
 # for combining final sequences from both glycerol stocks
 	final_dict = stock1.copy()
-
 	for seq2, count2 in stock2.items():
 		if seq2 in stock1.keys():
 			final_dict[seq2] += count2
 		else:
 			final_dict[seq2] = count2
-
 	return final_dict
 
 
@@ -85,36 +79,6 @@ def histogram(seq_dict):
 
 	plt.bar(sequences, counts)
 	plt.show()
-
-
-
-def recombined_barcodes(filename, num_regions):
-# returns list of SeqRecord objects
-	regions = [[] for _ in range(num_regions)]
-
-	for rec in SeqIO.parse(filename, 'fasta'):
-		region = int(rec.name.partition('region')[2][0])
-		regions[region-1].append(rec)
-
-	barcodes_combined = itertools.product(regions[2], regions[1], regions[0])
-	final_barcodes = []
-
-	for tple in barcodes_combined:
-		sequence = ''
-		oligo_id = ''
-
-		for barcode in tple:
-			sequence += str(barcode.seq)
-			oligo_id += str(barcode.name).partition('barcode')[2][0]
-
-			if barcode.seq != tple[-1].seq:
-				oligo_id += ','
-
-		seq = Seq(sequence)
-		seq_rec = SeqRecord(seq, id=oligo_id)
-		final_barcodes.append(seq_rec)
-
-	return final_barcodes
 
 
 
@@ -194,11 +158,13 @@ def get_barcodes(csvfile, oligosfile, barcodesfile, alignment, raw_alignment):
 		temp_barcodes.append(combined_barcode)
 
 	final_barcodes = []
+	filler1 = 'GATAAGGGCCCATATCTGGAAA' # first filler from benchling file
+	filler2 = 'TTGCTAGCCCTTGAACG' # second filler from benchling file
 	for bc_combos in temp_barcodes:
 		bc1 = str(bc_combos[0].seq)
 		bc2 = str(bc_combos[1].seq)
 		bc3 = str(bc_combos[2].seq)
-		final_bc = bc3+bc2+bc1 # this is wrong, should include filler in between
+		final_bc = bc3+filler1+bc2+filler2+bc1 # makes complete barcode
 		final_barcodes.append(final_bc)
 
 	return final_barcodes
