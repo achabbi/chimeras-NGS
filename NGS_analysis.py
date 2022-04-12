@@ -6,7 +6,6 @@ import itertools
 import matplotlib.pyplot as plt
 from collections import Counter
 from tqdm import tqdm
-import csv
 import sequences as sq
 
 
@@ -76,6 +75,7 @@ def combine_dictionaries(stock1, stock2):
 
 
 def histogram(seq_dict):
+	# makes a histogram from sequence dictionary
 	sequences = []
 	counts = []
 
@@ -117,65 +117,6 @@ def recombined_barcodes(filename, num_regions):
 	return final_barcodes
 
 
-
-def filter_barcodes(sequence_dict, barcodes):
-# get the barcodes from all possilibities that match from the data
-# sequence_dict is histogram like dictionary
-	sequences = list(sequence_dict.keys())
-
-	def longestSubstringFinder(string1, string2):
-	    '''Find the longest matching word'''
-	    answer = ""
-	    len1, len2 = len(string1), len(string2)
-	    for i in range(len1):
-	        for j in range(len2):
-	            lcs_temp=0
-	            match=''
-	            while ((i+lcs_temp < len1) and (j+lcs_temp<len2) and string1[i+lcs_temp] == string2[j+lcs_temp]):
-	                match += string2[j+lcs_temp]
-	                lcs_temp+=1         
-	            if (len(match) > len(answer)):
-	                answer = match              
-	    return answer
-
-	def listCheck(main):
-	    '''control the input for finding substring in a list of words'''
-	    string1 = main[0]
-	    result = []
-	    for i in range(1, len(main)):
-	        string2 = main[i]
-	        res1 = longestSubstringFinder(string1, string2)
-	        res2 = longestSubstringFinder(string2, string1)
-	        result.append(res1)
-	        result.append(res2)
-	    result.sort()
-	    return result
-
-	found_barcodes = []
-	for barcode in tqdm(barcodes):
-		barcode_seq = str(barcode.seq) # SeqRecord object so need .seq
-		for seq in sequences:
-			raw_seq = str(seq) # no need for .seq since already Seq object
-
-			main = [barcode_seq, raw_seq]
-			first_answer = listCheck(main)
-			final_answer  = []
-
-			for item1 in first_answer:
-			    string1 = item1
-			    double_check = True
-			    for item2 in main:
-			        string2 = item2
-			        if longestSubstringFinder(string1, string2) != string1:
-			            double_check = False
-			    if double_check:
-			        final_answer.append(string1)
-
-			overlap = len(list(set(final_answer))[0])
-			if overlap >= 50:
-				found_barcodes.append(barcode)
-
-	return found_barcodes
 
 
 
@@ -257,7 +198,7 @@ def get_barcodes(csvfile, oligosfile, barcodesfile, alignment, raw_alignment):
 		bc1 = str(bc_combos[0].seq)
 		bc2 = str(bc_combos[1].seq)
 		bc3 = str(bc_combos[2].seq)
-		final_bc = bc3+bc2+bc1
+		final_bc = bc3+bc2+bc1 # this is wrong, should include filler in between
 		final_barcodes.append(final_bc)
 
 	return final_barcodes
@@ -265,6 +206,7 @@ def get_barcodes(csvfile, oligosfile, barcodesfile, alignment, raw_alignment):
 
 
 def check_coverage(data, barcodes):
+	# checks which complete barcodes were found in the NGS reads
 	sequences = [str(seq) for seq in list(data.keys())]
 	found_sequences = []
 	found_barcodes = []
@@ -275,31 +217,13 @@ def check_coverage(data, barcodes):
 				found_barcodes.append(barcode)
 				found_sequences.append(sequence)
 
-	print(len(found_barcodes))
+	print(len(found_barcodes)) # how many barcodes were found
 	print(len(barcodes))
 
 
 
 
-'''
-possibly more efficient option cause current option for finding barcodes takes too long to run:
-
-go through merged.csv chimeras, reverse translate, then find which 
-oligos make up each chimera (going to have to remove extra stuff like fillers, bsmbi)
-then, find corresponding barcode for each oligo (might run into a problem here bc of three copies)
-since you know which barcode makes up each oligo then, create BC3+2+1 for each chimera sequence
-then, run filter_barcodes with BC3+2+1 sequences and NGS sequences to see which of the
-BC3+2+1 sequences are covered in the NGS data
-
-hopefully this idea should be faster bc won't have to check over a million combinations
-DON'T DELETE filter_barcodes
-'''
-
-# ASK: how much of the NGS barcode region has to overlap with th
-# does the entire barcode region need to be there?
-# if entire region does not need to be there,
-# then can loop through each barcode region and check if barcode in NGS_barcode_sequence
-# if barcodes from all three regions there, then record which ones and find corresponding oligos
+# ----Main code begins-------
 
 
 quality_forward_g180 = filter_quality('g180_S1_L001_R1_001.fastq')
@@ -317,37 +241,44 @@ occurrences_reverse_g180 = dict(Counter(filtered_reverse_g180))
 occurrences_forward_g181 = dict(Counter(filtered_forward_g181))
 occurrences_reverse_g181 = dict(Counter(filtered_reverse_g181))
 
-combined_dict_g180 = combine_forward_reverse(occurrences_forward_g180, occurrences_reverse_g180)
-combined_dict_g181 = combine_forward_reverse(occurrences_forward_g181, occurrences_reverse_g181)
+reads_g180 = combine_forward_reverse(occurrences_forward_g180, occurrences_reverse_g180)
+reads_g181 = combine_forward_reverse(occurrences_forward_g181, occurrences_reverse_g181)
 
-combined_dict = combine_dictionaries(combined_dict_g180, combined_dict_g181)
-#histogram(combined_dict_g180)
+combined_reads = combine_dictionaries(reads_g180, reads_g181)
+# combined_reads is dictionary containing unique sequences from both g180 and g181 after filtering
+# format of dictionary is following: {sequence1: count, 'sequence2: count, etc.}, 
+# where sequence1, sequence2 are SeqRecord objects (can be converted to string with str(sequence1))
 
-'''
-oligos_file = '/Users/architc/Documents/Rice/Research/Silberg Lab/Scripts/Final_Scripts/OBD Oligos/oligos2.fasta'
-barcodes_file = '/Users/architc/Documents/Rice/Research/Silberg Lab/Scripts/Final_Scripts/OBD Oligos/barcodes2.fasta'
-csv_file = '/Users/architc/Documents/Rice/Research/Silberg Lab/Scripts/Calibration_Libraries/OBD Library/merged.csv'
-pdb_file = '/Users/architc/Documents/Rice/Research/Silberg Lab/Scripts/PDB_Files/4ZO0.pdb'
-alignment_file = '/Users/architc/Documents/Rice/Research/Silberg Lab/Scripts/Alignment_Files/aav2_aav4_aav5_obd.clustal_num'
+
+
+
+oligos_file = 'oligos2.fasta'
+barcodes_file = 'barcodes2.fasta'
+chimera_file = 'chimeras.csv'
+pdb_file = '4ZO0.pdb'
+alignment_file = 'aav2_aav4_aav5_obd.clustal_num'
 
 raw_alignment = AlignIO.read(alignment_file, "clustal")
 modified_alignment, raw_alignment2 = sq.modify_alignment(pdb_file, 'A', raw_alignment)
 
-barcodes = get_barcodes(csv_file, oligos_file, barcodes_file, modified_alignment, raw_alignment)
-#check_coverage(combined_dict, barcodes)
-'''
-
-sequences = []
-for seq in combined_dict.keys():
-	sequence = str(seq)
-	sequences.append(sequence)
+barcodes = get_barcodes(chimera_file, oligos_file, barcodes_file, modified_alignment, raw_alignment) # gets all complete barcodes from chimera library
+found_barcodes = check_coverage(combined_reads, barcodes) # gets barcodes from above were found in NGS data
 
 
-a = open('unique_sequences.csv', 'w')
-for sequence in sequences:
-	a.write(sequence)
-	a.write('\n')
-a.close()
+
+# code below just writes unique sequences to csv file
+
+#sequences = []
+#for seq in combined_reads.keys():
+#	sequence = str(seq)
+#	sequences.append(sequence)
+
+
+#a = open('unique_sequences.csv', 'w')
+#for sequence in sequences:
+#	a.write(sequence)
+#	a.write('\n')
+#a.close()
 
 
 
