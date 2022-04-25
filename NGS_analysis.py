@@ -22,27 +22,15 @@ def find_matches(forward, reverse):
 	raw_seq_forward = [sequence.seq for sequence in forward]
 	raw_seq_reverse = [sequence.seq.reverse_complement() for sequence in reverse]
 
-	found_forward = []
-	found_reverse = []
-
 	filtered_forward = []
 	filtered_reverse = []
+	intersect = list(set(raw_seq_forward) & set(raw_seq_reverse))
 
-	for seq in raw_seq_forward:
-		if seq in raw_seq_reverse and seq not in found_forward:
-			found_forward.append(seq)
-
-	for seq in raw_seq_reverse:
-		if seq in raw_seq_forward and seq not in found_reverse:
-			found_reverse.append(seq)
-
-	for seqf in forward:
-		if seqf.seq in found_forward:
-			filtered_forward.append(seqf.seq)
-
-	for seqr in reverse:
-		if seqr.seq.reverse_complement() in found_reverse:
-			filtered_reverse.append(seqr.seq)
+	for seq in tqdm(intersect):
+		for _ in range(raw_seq_forward.count(seq)):
+				filtered_forward.append(seq)
+		for _ in range(raw_seq_reverse.count(seq)):
+				filtered_reverse.append(seq.reverse_complement())
 
 	return filtered_forward, filtered_reverse
 
@@ -183,10 +171,25 @@ def check_coverage(data, barcodes):
 				found_barcodes.append(barcode)
 				found_sequences.append(sequence)
 
+	print(len(set(found_barcodes))) # how many unique barcodes were found
 	print(len(found_barcodes)) # how many barcodes were found
-	print(len(barcodes))
+	print(len(set(barcodes))) # how many expected unique barcodes are there
 
 
+def check_control(data):
+	sequences = [seq for seq in list(data.keys())]
+	positive_count = 0
+	negative_count = 0
+
+	positive = 'TATGCGGCTTCCGTCTTTCTGGGATGGGCCACGAAAAAGTTCGGCAAGAGGAATACAATATGGCTGTTTGGGCCTGCAACTACCGGGAAAACCAACATCGCGGAGGCCATAGCCCACACTGTGCCCTTCTACGGGTGCGTAAACTGGACCAATGAGAACTTTCCCTTCAACGACTGTGTCGACAAG'
+	negative = 'GGAACTAAACGGGTACGATCCCCAATATGCGGCTTCCGTCTTTCTGGGATGGGCCACGAAAAAGTTCGGCAAGAGGAACACCATCTGGCTGTTTGGGCCTGCAACTACCGGGCACACCAACATCGCGGAGGCCATAGCCCACACTGTGCCCTTCTACGGGTGCGTAAACTGGACCAATGAGAACTTTCCCTTCAACGACTGTGTCGACAAGATGGTGATCTGGTGGGAGGAGGGGAAGATGACCGCCAAGGTCGTGGAGTCGGCCAAAGCCATTCTCGGAGGAAGCAA'
+
+	for sequence in sequences:
+		if positive in str(sequence):
+			positive_count += data[sequence]
+		if negative in str(sequence):
+			negative_count += data[sequence]
+	print(positive_count, negative_count)
 
 
 # ----Main code begins-------
@@ -195,22 +198,23 @@ def check_coverage(data, barcodes):
 quality_forward_g180 = filter_quality('g180_S1_L001_R1_001.fastq')
 quality_reverse_g180 = filter_quality('g180_S1_L001_R2_001.fastq')
 
-quality_forward_g181 = filter_quality('g181_S2_L001_R1_001.fastq')
-quality_reverse_g181 = filter_quality('g181_S2_L001_R2_001.fastq')
+#quality_forward_g181 = filter_quality('g181_S2_L001_R1_001.fastq')
+#quality_reverse_g181 = filter_quality('g181_S2_L001_R2_001.fastq')
 
 filtered_forward_g180, filtered_reverse_g180 = find_matches(quality_forward_g180, quality_reverse_g180)
-filtered_forward_g181, filtered_reverse_g181 = find_matches(quality_forward_g181, quality_reverse_g181)
+#filtered_forward_g181, filtered_reverse_g181 = find_matches(quality_forward_g181, quality_reverse_g181)
 
 occurrences_forward_g180 = dict(Counter(filtered_forward_g180))
 occurrences_reverse_g180 = dict(Counter(filtered_reverse_g180))
 
-occurrences_forward_g181 = dict(Counter(filtered_forward_g181))
-occurrences_reverse_g181 = dict(Counter(filtered_reverse_g181))
+#occurrences_forward_g181 = dict(Counter(filtered_forward_g181))
+#occurrences_reverse_g181 = dict(Counter(filtered_reverse_g181))
 
+# reads_g180 would just contain count dictionary for single triplicate
 reads_g180 = combine_forward_reverse(occurrences_forward_g180, occurrences_reverse_g180)
-reads_g181 = combine_forward_reverse(occurrences_forward_g181, occurrences_reverse_g181)
+#reads_g181 = combine_forward_reverse(occurrences_forward_g181, occurrences_reverse_g181)
 
-combined_reads = combine_dictionaries(reads_g180, reads_g181)
+#combined_reads = combine_dictionaries(reads_g180, reads_g181)
 # combined_reads is dictionary containing unique sequences from both g180 and g181 after filtering
 # format of dictionary is following: {sequence1: count, 'sequence2: count, etc.}, 
 # where sequence1, sequence2 are SeqRecord objects (can be converted to string with str(sequence1))
@@ -228,7 +232,7 @@ raw_alignment = AlignIO.read(alignment_file, "clustal")
 modified_alignment, raw_alignment2 = sq.modify_alignment(pdb_file, 'A', raw_alignment)
 
 barcodes = get_barcodes(chimera_file, oligos_file, barcodes_file, modified_alignment, raw_alignment) # gets all complete barcodes from chimera library
-found_barcodes = check_coverage(combined_reads, barcodes) # gets barcodes from above were found in NGS data
+found_barcodes = check_coverage(reads_g180, barcodes) # gets barcodes from above were found in NGS data
 
 
 
