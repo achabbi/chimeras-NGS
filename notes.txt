@@ -1,0 +1,10 @@
+1. Copy fastq files into data/raw_fastq_files
+2. Rename fastq files accordingly (name_R1.fastq.gz, name_R2.fastq.gz)
+3. Update SAMPLES in Snakefile with names
+4. Ensure snakemake, fastp, and biopython are installed in conda environment
+
+
+Run the following commands:
+
+conda activate chimeras
+snakemake --cores
