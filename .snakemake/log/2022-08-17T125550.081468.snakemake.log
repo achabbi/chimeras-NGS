@@ -1,0 +1,293 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                            count    min threads    max threads
+---------------------------  -------  -------------  -------------
+all                                1              1              1
+filter_merge_sequences             4              1              1
+get_barcode_sequence_counts        4              1              1
+get_oligo_counts                  12              1              1
+total                             21              1              1
+
+Select jobs to execute...
+
+[Wed Aug 17 12:55:51 2022]
+rule filter_merge_sequences:
+    input: data/raw_fastq_files/OBD12_R1.fastq.gz, data/raw_fastq_files/OBD12_R2.fastq.gz
+    output: data/fastq_files_unpaired/OBD12_R1_unpaired.fastq.gz, data/fastq_files_unpaired/OBD12_R2_unpaired.fastq.gz, data/fastq_files_filtered_merged/OBD12_filtered_merged.fastq.gz
+    log: data/logs/OBD12.html
+    jobid: 4
+    reason: Missing output files: data/fastq_files_filtered_merged/OBD12_filtered_merged.fastq.gz
+    wildcards: sample=OBD12
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+
+[Wed Aug 17 12:55:51 2022]
+rule filter_merge_sequences:
+    input: data/raw_fastq_files/OBD123A_R1.fastq.gz, data/raw_fastq_files/OBD123A_R2.fastq.gz
+    output: data/fastq_files_unpaired/OBD123A_R1_unpaired.fastq.gz, data/fastq_files_unpaired/OBD123A_R2_unpaired.fastq.gz, data/fastq_files_filtered_merged/OBD123A_filtered_merged.fastq.gz
+    log: data/logs/OBD123A.html
+    jobid: 6
+    reason: Missing output files: data/fastq_files_filtered_merged/OBD123A_filtered_merged.fastq.gz
+    wildcards: sample=OBD123A
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+
+[Wed Aug 17 12:55:51 2022]
+rule filter_merge_sequences:
+    input: data/raw_fastq_files/OBD123B_R1.fastq.gz, data/raw_fastq_files/OBD123B_R2.fastq.gz
+    output: data/fastq_files_unpaired/OBD123B_R1_unpaired.fastq.gz, data/fastq_files_unpaired/OBD123B_R2_unpaired.fastq.gz, data/fastq_files_filtered_merged/OBD123B_filtered_merged.fastq.gz
+    log: data/logs/OBD123B.html
+    jobid: 8
+    reason: Missing output files: data/fastq_files_filtered_merged/OBD123B_filtered_merged.fastq.gz
+    wildcards: sample=OBD123B
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+
+[Wed Aug 17 12:55:51 2022]
+rule filter_merge_sequences:
+    input: data/raw_fastq_files/OBD1_R1.fastq.gz, data/raw_fastq_files/OBD1_R2.fastq.gz
+    output: data/fastq_files_unpaired/OBD1_R1_unpaired.fastq.gz, data/fastq_files_unpaired/OBD1_R2_unpaired.fastq.gz, data/fastq_files_filtered_merged/OBD1_filtered_merged.fastq.gz
+    log: data/logs/OBD1.html
+    jobid: 2
+    reason: Missing output files: data/fastq_files_filtered_merged/OBD1_filtered_merged.fastq.gz
+    wildcards: sample=OBD1
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:55:56 2022]
+Finished job 2.
+1 of 21 steps (5%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:55:56 2022]
+rule get_barcode_sequence_counts:
+    input: data/fastq_files_filtered_merged/OBD1_filtered_merged.fastq.gz
+    output: data/results/barcode_counts/OBD1_BC1_counts.csv, data/results/barcode_counts/OBD1_BC2_counts.csv, data/results/barcode_counts/OBD1_BC3_counts.csv, data/results/sequence_counts/OBD1_mutants.csv
+    jobid: 1
+    reason: Missing output files: data/results/barcode_counts/OBD1_BC3_counts.csv, data/results/sequence_counts/OBD1_mutants.csv, data/results/barcode_counts/OBD1_BC2_counts.csv, data/results/barcode_counts/OBD1_BC1_counts.csv; Input files updated by another job: data/fastq_files_filtered_merged/OBD1_filtered_merged.fastq.gz
+    wildcards: sample=OBD1
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:55:57 2022]
+Finished job 4.
+2 of 21 steps (10%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:55:57 2022]
+rule get_barcode_sequence_counts:
+    input: data/fastq_files_filtered_merged/OBD12_filtered_merged.fastq.gz
+    output: data/results/barcode_counts/OBD12_BC1_counts.csv, data/results/barcode_counts/OBD12_BC2_counts.csv, data/results/barcode_counts/OBD12_BC3_counts.csv, data/results/sequence_counts/OBD12_mutants.csv
+    jobid: 3
+    reason: Missing output files: data/results/barcode_counts/OBD12_BC3_counts.csv, data/results/barcode_counts/OBD12_BC2_counts.csv, data/results/sequence_counts/OBD12_mutants.csv, data/results/barcode_counts/OBD12_BC1_counts.csv; Input files updated by another job: data/fastq_files_filtered_merged/OBD12_filtered_merged.fastq.gz
+    wildcards: sample=OBD12
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:55:57 2022]
+Finished job 8.
+3 of 21 steps (14%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:55:57 2022]
+rule get_barcode_sequence_counts:
+    input: data/fastq_files_filtered_merged/OBD123B_filtered_merged.fastq.gz
+    output: data/results/barcode_counts/OBD123B_BC1_counts.csv, data/results/barcode_counts/OBD123B_BC2_counts.csv, data/results/barcode_counts/OBD123B_BC3_counts.csv, data/results/sequence_counts/OBD123B_mutants.csv
+    jobid: 7
+    reason: Missing output files: data/results/barcode_counts/OBD123B_BC1_counts.csv, data/results/barcode_counts/OBD123B_BC2_counts.csv, data/results/sequence_counts/OBD123B_mutants.csv, data/results/barcode_counts/OBD123B_BC3_counts.csv; Input files updated by another job: data/fastq_files_filtered_merged/OBD123B_filtered_merged.fastq.gz
+    wildcards: sample=OBD123B
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:55:58 2022]
+Finished job 6.
+4 of 21 steps (19%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:55:58 2022]
+rule get_barcode_sequence_counts:
+    input: data/fastq_files_filtered_merged/OBD123A_filtered_merged.fastq.gz
+    output: data/results/barcode_counts/OBD123A_BC1_counts.csv, data/results/barcode_counts/OBD123A_BC2_counts.csv, data/results/barcode_counts/OBD123A_BC3_counts.csv, data/results/sequence_counts/OBD123A_mutants.csv
+    jobid: 5
+    reason: Missing output files: data/results/barcode_counts/OBD123A_BC2_counts.csv, data/results/barcode_counts/OBD123A_BC3_counts.csv, data/results/sequence_counts/OBD123A_mutants.csv, data/results/barcode_counts/OBD123A_BC1_counts.csv; Input files updated by another job: data/fastq_files_filtered_merged/OBD123A_filtered_merged.fastq.gz
+    wildcards: sample=OBD123A
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:20 2022]
+Finished job 1.
+5 of 21 steps (24%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:56:20 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD1_BC3_counts.csv
+    output: data/results/oligo_counts/OBD1_BC3_oligo_counts.csv
+    jobid: 29
+    reason: Missing output files: data/results/oligo_counts/OBD1_BC3_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD1_BC3_counts.csv
+    wildcards: sample=OBD1_BC3
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:20 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD1_BC2_counts.csv
+    output: data/results/oligo_counts/OBD1_BC2_oligo_counts.csv
+    jobid: 22
+    reason: Missing output files: data/results/oligo_counts/OBD1_BC2_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD1_BC2_counts.csv
+    wildcards: sample=OBD1_BC2
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:20 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD1_BC1_counts.csv
+    output: data/results/oligo_counts/OBD1_BC1_oligo_counts.csv
+    jobid: 15
+    reason: Missing output files: data/results/oligo_counts/OBD1_BC1_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD1_BC1_counts.csv
+    wildcards: sample=OBD1_BC1
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:21 2022]
+Finished job 15.
+6 of 21 steps (29%) done
+[Wed Aug 17 12:56:21 2022]
+Finished job 22.
+7 of 21 steps (33%) done
+[Wed Aug 17 12:56:21 2022]
+Finished job 29.
+8 of 21 steps (38%) done
+[Wed Aug 17 12:56:27 2022]
+Finished job 7.
+9 of 21 steps (43%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:56:27 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD123B_BC1_counts.csv
+    output: data/results/oligo_counts/OBD123B_BC1_oligo_counts.csv
+    jobid: 18
+    reason: Missing output files: data/results/oligo_counts/OBD123B_BC1_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD123B_BC1_counts.csv
+    wildcards: sample=OBD123B_BC1
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:27 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD123B_BC3_counts.csv
+    output: data/results/oligo_counts/OBD123B_BC3_oligo_counts.csv
+    jobid: 32
+    reason: Missing output files: data/results/oligo_counts/OBD123B_BC3_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD123B_BC3_counts.csv
+    wildcards: sample=OBD123B_BC3
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:27 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD123B_BC2_counts.csv
+    output: data/results/oligo_counts/OBD123B_BC2_oligo_counts.csv
+    jobid: 25
+    reason: Missing output files: data/results/oligo_counts/OBD123B_BC2_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD123B_BC2_counts.csv
+    wildcards: sample=OBD123B_BC2
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:28 2022]
+Finished job 32.
+10 of 21 steps (48%) done
+[Wed Aug 17 12:56:28 2022]
+Finished job 18.
+11 of 21 steps (52%) done
+[Wed Aug 17 12:56:28 2022]
+Finished job 25.
+12 of 21 steps (57%) done
+[Wed Aug 17 12:56:35 2022]
+Finished job 3.
+13 of 21 steps (62%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:56:35 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD12_BC3_counts.csv
+    output: data/results/oligo_counts/OBD12_BC3_oligo_counts.csv
+    jobid: 30
+    reason: Missing output files: data/results/oligo_counts/OBD12_BC3_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD12_BC3_counts.csv
+    wildcards: sample=OBD12_BC3
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:35 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD12_BC2_counts.csv
+    output: data/results/oligo_counts/OBD12_BC2_oligo_counts.csv
+    jobid: 23
+    reason: Missing output files: data/results/oligo_counts/OBD12_BC2_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD12_BC2_counts.csv
+    wildcards: sample=OBD12_BC2
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+
+[Wed Aug 17 12:56:35 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD12_BC1_counts.csv
+    output: data/results/oligo_counts/OBD12_BC1_oligo_counts.csv
+    jobid: 16
+    reason: Missing output files: data/results/oligo_counts/OBD12_BC1_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD12_BC1_counts.csv
+    wildcards: sample=OBD12_BC1
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:36 2022]
+Finished job 30.
+14 of 21 steps (67%) done
+[Wed Aug 17 12:56:36 2022]
+Finished job 23.
+15 of 21 steps (71%) done
+[Wed Aug 17 12:56:36 2022]
+Finished job 16.
+16 of 21 steps (76%) done
+[Wed Aug 17 12:56:40 2022]
+Finished job 5.
+17 of 21 steps (81%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:56:41 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD123A_BC3_counts.csv
+    output: data/results/oligo_counts/OBD123A_BC3_oligo_counts.csv
+    jobid: 31
+    reason: Missing output files: data/results/oligo_counts/OBD123A_BC3_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD123A_BC3_counts.csv
+    wildcards: sample=OBD123A_BC3
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:41 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD123A_BC2_counts.csv
+    output: data/results/oligo_counts/OBD123A_BC2_oligo_counts.csv
+    jobid: 24
+    reason: Missing output files: data/results/oligo_counts/OBD123A_BC2_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD123A_BC2_counts.csv
+    wildcards: sample=OBD123A_BC2
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+
+[Wed Aug 17 12:56:41 2022]
+rule get_oligo_counts:
+    input: data/results/barcode_counts/OBD123A_BC1_counts.csv
+    output: data/results/oligo_counts/OBD123A_BC1_oligo_counts.csv
+    jobid: 17
+    reason: Missing output files: data/results/oligo_counts/OBD123A_BC1_oligo_counts.csv; Input files updated by another job: data/results/barcode_counts/OBD123A_BC1_counts.csv
+    wildcards: sample=OBD123A_BC1
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:41 2022]
+Finished job 31.
+18 of 21 steps (86%) done
+[Wed Aug 17 12:56:41 2022]
+Finished job 24.
+19 of 21 steps (90%) done
+[Wed Aug 17 12:56:41 2022]
+Finished job 17.
+20 of 21 steps (95%) done
+Select jobs to execute...
+
+[Wed Aug 17 12:56:41 2022]
+localrule all:
+    input: data/results/barcode_counts/OBD1_BC1_counts.csv, data/results/barcode_counts/OBD12_BC1_counts.csv, data/results/barcode_counts/OBD123A_BC1_counts.csv, data/results/barcode_counts/OBD123B_BC1_counts.csv, data/results/barcode_counts/OBD123repcapTA_BC1_counts.csv, data/results/barcode_counts/OBD123repcapLW_BC1_counts.csv, data/results/barcode_counts/OBD123finallibrary_BC1_counts.csv, data/results/barcode_counts/OBD1_BC2_counts.csv, data/results/barcode_counts/OBD12_BC2_counts.csv, data/results/barcode_counts/OBD123A_BC2_counts.csv, data/results/barcode_counts/OBD123B_BC2_counts.csv, data/results/barcode_counts/OBD123repcapTA_BC2_counts.csv, data/results/barcode_counts/OBD123repcapLW_BC2_counts.csv, data/results/barcode_counts/OBD123finallibrary_BC2_counts.csv, data/results/barcode_counts/OBD1_BC3_counts.csv, data/results/barcode_counts/OBD12_BC3_counts.csv, data/results/barcode_counts/OBD123A_BC3_counts.csv, data/results/barcode_counts/OBD123B_BC3_counts.csv, data/results/barcode_counts/OBD123repcapTA_BC3_counts.csv, data/results/barcode_counts/OBD123repcapLW_BC3_counts.csv, data/results/barcode_counts/OBD123finallibrary_BC3_counts.csv, data/results/sequence_counts/OBD1_mutants.csv, data/results/sequence_counts/OBD12_mutants.csv, data/results/sequence_counts/OBD123A_mutants.csv, data/results/sequence_counts/OBD123B_mutants.csv, data/results/sequence_counts/OBD123repcapTA_mutants.csv, data/results/sequence_counts/OBD123repcapLW_mutants.csv, data/results/sequence_counts/OBD123finallibrary_mutants.csv, data/results/oligo_counts/OBD1_BC1_oligo_counts.csv, data/results/oligo_counts/OBD12_BC1_oligo_counts.csv, data/results/oligo_counts/OBD123A_BC1_oligo_counts.csv, data/results/oligo_counts/OBD123B_BC1_oligo_counts.csv, data/results/oligo_counts/OBD123repcapTA_BC1_oligo_counts.csv, data/results/oligo_counts/OBD123repcapLW_BC1_oligo_counts.csv, data/results/oligo_counts/OBD123finallibrary_BC1_oligo_counts.csv, data/results/oligo_counts/OBD1_BC2_oligo_counts.csv, data/results/oligo_counts/OBD12_BC2_oligo_counts.csv, data/results/oligo_counts/OBD123A_BC2_oligo_counts.csv, data/results/oligo_counts/OBD123B_BC2_oligo_counts.csv, data/results/oligo_counts/OBD123repcapTA_BC2_oligo_counts.csv, data/results/oligo_counts/OBD123repcapLW_BC2_oligo_counts.csv, data/results/oligo_counts/OBD123finallibrary_BC2_oligo_counts.csv, data/results/oligo_counts/OBD1_BC3_oligo_counts.csv, data/results/oligo_counts/OBD12_BC3_oligo_counts.csv, data/results/oligo_counts/OBD123A_BC3_oligo_counts.csv, data/results/oligo_counts/OBD123B_BC3_oligo_counts.csv, data/results/oligo_counts/OBD123repcapTA_BC3_oligo_counts.csv, data/results/oligo_counts/OBD123repcapLW_BC3_oligo_counts.csv, data/results/oligo_counts/OBD123finallibrary_BC3_oligo_counts.csv
+    jobid: 0
+    reason: Input files updated by another job: data/results/oligo_counts/OBD1_BC1_oligo_counts.csv, data/results/barcode_counts/OBD123A_BC2_counts.csv, data/results/sequence_counts/OBD123A_mutants.csv, data/results/barcode_counts/OBD1_BC3_counts.csv, data/results/barcode_counts/OBD1_BC1_counts.csv, data/results/oligo_counts/OBD123A_BC1_oligo_counts.csv, data/results/oligo_counts/OBD123B_BC3_oligo_counts.csv, data/results/barcode_counts/OBD12_BC2_counts.csv, data/results/sequence_counts/OBD12_mutants.csv, data/results/barcode_counts/OBD123B_BC3_counts.csv, data/results/oligo_counts/OBD12_BC3_oligo_counts.csv, data/results/barcode_counts/OBD123A_BC3_counts.csv, data/results/oligo_counts/OBD1_BC3_oligo_counts.csv, data/results/oligo_counts/OBD123A_BC3_oligo_counts.csv, data/results/oligo_counts/OBD12_BC2_oligo_counts.csv, data/results/oligo_counts/OBD12_BC1_oligo_counts.csv, data/results/sequence_counts/OBD123B_mutants.csv, data/results/oligo_counts/OBD123B_BC1_oligo_counts.csv, data/results/barcode_counts/OBD123B_BC1_counts.csv, data/results/barcode_counts/OBD12_BC1_counts.csv, data/results/oligo_counts/OBD123B_BC2_oligo_counts.csv, data/results/barcode_counts/OBD12_BC3_counts.csv, data/results/barcode_counts/OBD123A_BC1_counts.csv, data/results/barcode_counts/OBD123B_BC2_counts.csv, data/results/oligo_counts/OBD123A_BC2_oligo_counts.csv, data/results/sequence_counts/OBD1_mutants.csv, data/results/oligo_counts/OBD1_BC2_oligo_counts.csv, data/results/barcode_counts/OBD1_BC2_counts.csv
+    resources: tmpdir=/var/folders/1d/b75wyj2s3m34lw9wpj1rhl_80000gn/T
+
+[Wed Aug 17 12:56:41 2022]
+Finished job 0.
+21 of 21 steps (100%) done
+Complete log: .snakemake/log/2022-08-17T125550.081468.snakemake.log
