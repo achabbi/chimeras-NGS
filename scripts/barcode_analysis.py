@@ -94,12 +94,13 @@ def check_combinations(data, barcodesfile, newfile):
 				else:
 					pass
 		seq_str = '_'.join(combination)
-		if one_barcode:
+		if one_barcode and '' not in seq.split('_'):
 			if seq_str in barcode_combos.keys():
 				barcode_combos[seq_str] += count
 			else:
 				barcode_combos[seq_str] = count
 
+	
 	total_counts = sum(barcode_combos.values())
 	
 	with open(str(newfile), 'w') as csv_file:  

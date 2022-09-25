@@ -48,9 +48,9 @@ if __name__ == '__main__':
         reader = csv.reader(csvfile)
         for row in reader:
             try:
-                ids = (int(row[0]), int(row[1]), int(row[4]))
+                ids = (int(row[0]), int(row[1]), int(row[2]))
                 if ids in naive.keys():
-                    selected[ids] = int(row[3])
+                    selected[ids] = int(row[4])
             except:
                 pass
         
