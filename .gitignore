@@ -3,3 +3,6 @@ data/logs/*
 .snakemake/
 .DS_Store
 
+data/raw_fastq_files/*
+data/fastq_files_unpaired/*
+data/fastq_files_filtered_merged/*
