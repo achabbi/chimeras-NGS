@@ -2,7 +2,7 @@
 [Snakemake](https://snakemake.github.io/) pipeline to simplify analysis of AAV Rep OBD chimera deep sequencing data.
 
 ## Setup
-1. Run `git clone https://github.com/archit-c/chimeras` to clone repository.
+1. Run `git clone https://github.com/archit-c/chimeras.git` to clone repository.
 2. Install [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation).
 3. Run the following commands to create conda environment and install required packages:
 ```
