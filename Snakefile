@@ -7,11 +7,18 @@ SAMPLES = ['OBD1_naive',
             'OBD123finallibrary_naive']
 
 
+
 def names_enrichment(names):
     return [name.split('_')[0] for name in names]
 
 def names_summary(names):
     return [name.split('replicate')[0] for name in names]
+
+def replicates_present(names):
+    for name in names:
+        if 'replicate' not in name:
+            return "expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))"
+    return "expand('data/results/summary_tables/{sample}_summary.csv', sample=names_summary(SAMPLES))"
 
 
 rule all:
@@ -20,8 +27,7 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
-#        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES)),
-#        expand('data/results/summary_tables/{sample}_summary.csv', sample=names_summary(SAMPLES))
+#        replicates_present(SAMPLES)
 
 
 rule filter_merge_sequences:
