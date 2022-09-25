@@ -1,13 +1,13 @@
 *.json
 data/logs/*
-.snakemake
+.snakemake/
 **.DS_Store
 
 data/raw_fastq_files/*
 data/fastq_files_unpaired/*
 data/fastq_files_filtered_merged/*
 
-data/results/barcode_counts/*
-data/results/oligo_counts/*
-data/results/barcode_mutant_counts/*
-data/results/oligo_mutant_counts/*
+data/results/barcode_counts/*.csv
+data/results/oligo_counts/*.csv
+data/results/barcode_mutant_counts/*.csv
+data/results/oligo_mutant_counts/*.csv
