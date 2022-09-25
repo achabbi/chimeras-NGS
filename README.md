@@ -1,0 +1,36 @@
+# chimeras
+[Snakemake](https://snakemake.github.io/) pipeline to simplify analysis of AAV Rep OBD chimera deep sequencing data.
+
+## Setup
+1. Run `git clone https://github.com/archit-c/chimeras` to clone repository.
+2. Install [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation).
+3. Run the following commands to create conda environment and install required packages:
+```
+$ conda create --name chimeras python=3.9
+$ conda activate chimeras
+$ conda install -c bioconda snakemake
+$ conda install -c bioconda fastp
+$ conda install -c conda-forge biopython
+```
+4. Copy `fastq.gz` files into `data/raw_fastq_files`.
+5. Rename `fastq.gz` files to match naming convention `[name]_R1.fastq.gz` & `[name]_R2.fastq.gz`, where `[name]` is `[identifier]_naive` or `[identifier]_selected`.
+- Example file pair: `OBD123A_naive_R1.fastq.gz`, `OBD123A_naive_R2.fastq.gz`.
+6. Open `Snakefile`  and update `SAMPLES` list with only identifiers of names of all files to be processed.
+- Example: `SAMPLES = ['OBD12_naive', 'OBD123A_naive']`
+
+## Run pipeline
+To run the pipeline, run the following commands:
+```
+$ cd chimeras/
+$ conda activate chimeras
+$ snakemake --cores
+```
+
+## Results
+All results are csv files contained in the `data/results` directory. Each directory in `results` contain files with different analysis results.
+- `data/results/barcode_counts`: counts of individual barcodes from each region
+- `data/results/oligo_counts`: counts of individual oligos from each region
+- `data/results/barcode_mutant_counts`: counts of chimeric barcode mutants
+- `data/results/oligo_mutant_counts`: counts of chimeric oligo mutants
+- `data/results/enrichment_scores`: enrichment scores of chimeric oligo mutants
+    - **NOTE**: both naive and selected files for each sample must be present in `data/raw_fastq_files` for enrichment results.

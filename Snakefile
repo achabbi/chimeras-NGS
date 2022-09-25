@@ -1,14 +1,23 @@
-SAMPLES = ['OBD1', 'OBD12', 'OBD123A', 'OBD123B', 'OBD123repcapTA', 'OBD123repcapLW', 'OBD123finallibrary']
+SAMPLES = ['OBD1_naive',
+            'OBD12_naive', 
+            'OBD123A_naive', 
+            'OBD123B_naive', 
+            'OBD123repcapTA_naive', 
+            'OBD123repcapLW_naive', 
+            'OBD123finallibrary_naive']
+
+
+def names_plain(names):
+    return [name.split('_')[0] for name in names]
+
 
 rule all:
     input:
-        expand('data/results/barcode_counts/{sample}_BC1_counts.csv', sample=SAMPLES),
-        expand('data/results/barcode_counts/{sample}_BC2_counts.csv', sample=SAMPLES),
-        expand('data/results/barcode_counts/{sample}_BC3_counts.csv', sample=SAMPLES),
-        expand('data/results/mutant_counts/{sample}_mutants_oligos.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC1_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
-        expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES)
+        expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
+        expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
+#        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_plain(SAMPLES))
 
 
 rule filter_merge_sequences:
@@ -28,31 +37,42 @@ rule filter_merge_sequences:
         " --qualified_quality_phred {params.qs} -A --merge --merged_out {output.M} --html {log}"
 
 
-rule get_barcode_sequence_counts:
+rule get_barcode_counts:
     input:
         'data/fastq_files_filtered_merged/{sample}_filtered_merged.fastq.gz'
     output:
-        'data/results/barcode_counts/{sample}_BC1_counts.csv',
-        'data/results/barcode_counts/{sample}_BC2_counts.csv',
-        'data/results/barcode_counts/{sample}_BC3_counts.csv',
-        'data/results/sequence_counts/{sample}_mutants.csv'
+        'data/results/barcode_counts/{sample}_BC1_barcode_counts.csv',
+        'data/results/barcode_counts/{sample}_BC2_barcode_counts.csv',
+        'data/results/barcode_counts/{sample}_BC3_barcode_counts.csv',
+        'data/results/barcode_mutant_counts/{sample}_barcode_mutants.csv'
     script:
-        'scripts/analysis.py'
+        'scripts/barcode_analysis.py'
 
 
 rule get_oligo_counts:
     input:
-        'data/results/barcode_counts/{sample}_counts.csv'
+        'data/results/barcode_counts/{sample}_barcode_counts.csv'
     output:
         'data/results/oligo_counts/{sample}_oligo_counts.csv'
     script:
         'scripts/oligo_counts.py'
 
 
-rule get_mutant_counts:
+rule get_oligo_mutant_counts:
     input:
-        'data/results/sequence_counts/{sample}_mutants.csv'
+        'data/results/barcode_mutant_counts/{sample}_barcode_mutants.csv',
+        'data/fastq_files_filtered_merged/{sample}_filtered_merged.fastq.gz'
     output:
-        'data/results/mutant_counts/{sample}_mutants_oligos.csv'
+        'data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv'
     script:
-        'scripts/mutants.py'
+        'scripts/oligo_mutants.py'
+
+
+rule calculate_enrichments:
+    input:
+        'data/results/oligo_mutant_counts/{sample}_naive_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}_selected_oligo_mutants.csv'
+    output:
+        'data/results/enrichment_scores/{sample}_enrichment.csv'
+    script:
+        'scripts/enrichment_scores.py'

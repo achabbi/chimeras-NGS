@@ -4,11 +4,18 @@ from Bio import SeqIO
 
 
 if __name__ == "__main__":
+    """
+    Gets counts of each individual oligo instead of barcode.
+    Necessary as there are 3 barcodes per oligo.
+
+    Input: csv file with individual barcode sequences and counts through Snakemake
+    Output: csv file with individual oligo ids and counts through Snakemake
+    """
 
     oligos_file = 'metadata/oligos.fasta'
     barcodes_file = 'metadata/barcodes.fasta'
-    barcodes_csv = snakemake.input[0]
-    file_path = snakemake.output[0]
+    barcodes_csv = snakemake.input[0] # Snakemake input barcode counts csv file
+    file_path = snakemake.output[0] # Snakemake output oligo counts csv file
 
     csv_file = open(barcodes_csv, 'r')
     data = list(csv.reader(csv_file))
@@ -30,10 +37,12 @@ if __name__ == "__main__":
                 oligo_counts[id] += count
             else:
                 oligo_counts[id] = count
-
+    
+    total_counts = sum(oligo_counts.values())
+    
     with open(file_path, 'w') as csv_file:  
         writer = csv.writer(csv_file)
-        writer.writerow(['ID', 'Count'])
+        writer.writerow(['ID', 'Count', 'Frequency'])
         for key, value in oligo_counts.items():
-            writer.writerow([key, value])
+            writer.writerow([key, value, (value/total_counts)])
     
