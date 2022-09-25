@@ -94,7 +94,7 @@ def check_combinations(data, barcodesfile, newfile):
 				else:
 					pass
 		seq_str = '_'.join(combination)
-		if one_barcode and '' not in seq.split('_'):
+		if one_barcode and '' not in seq_str.split('_'):
 			if seq_str in barcode_combos.keys():
 				barcode_combos[seq_str] += count
 			else:
