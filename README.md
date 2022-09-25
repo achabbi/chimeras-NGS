@@ -19,6 +19,13 @@ $ conda install -c conda-forge biopython
     - Example: `SAMPLES = ['OBD12_naive', 'OBD123A_naive']` will run the pipeline on the following pairs of files from `data/raw_fastq_files`:
         - `OBD12_naive_R1.fastq.gz` and `OBD12_naive_R2.fastq.gz`
         - `OBD123A_naive_R1.fastq.gz` and `OBD123A_naive_R2.fastq.gz`
+    - If samples are in replicates (pipeline is currently configured for 3 replicates per sample), then the following naming convention should be used: `SAMPLES = ['OBD12replicate1_naive', 'OBD12replicate2_naive', 'OBD12replicate3_naive', 'OBD123Areplicate1_naive', 'OBD123Areplicate2_naive', 'OBD123Areplicate3_naive']`. The files in `data/raw_fastq_files` should be named accordingly:
+        - `OBD12replicate1_naive_R1.fastq.gz` and `OBD12_replicate1_naive_R2.fastq.gz`
+        - `OBD12replicate2_naive_R1.fastq.gz` and `OBD12_replicate2_naive_R2.fastq.gz`
+        - `OBD12replicate3_naive_R1.fastq.gz` and `OBD12_replicate3_naive_R2.fastq.gz`
+        - `OBD123Areplicate1_naive_R1.fastq.gz` and `OBD123Areplicate1_naive_R2.fastq.gz`
+        - `OBD123Areplicate2_naive_R1.fastq.gz` and `OBD123Areplicate2_naive_R2.fastq.gz`
+        - `OBD123Areplicate3_naive_R1.fastq.gz` and `OBD123Areplicate3_naive_R2.fastq.gz`
 
 ## Run pipeline
 To run the pipeline, run the following commands:
@@ -29,10 +36,11 @@ $ snakemake --cores
 ```
 
 ## Results
-All results are csv files contained in the `data/results` directory. Each directory in `results` contain files with different analysis results.
-- `data/results/barcode_counts`: counts of individual barcodes from each region
-- `data/results/oligo_counts`: counts of individual oligos from each region
-- `data/results/barcode_mutant_counts`: counts of chimeric barcode mutants
-- `data/results/oligo_mutant_counts`: counts of chimeric oligo mutants
-- `data/results/enrichment_scores`: enrichment scores of chimeric oligo mutants
+All results are `csv` files contained in the `data/results` directory. Each directory in `results` contain files with different analysis results.
+- `data/results/barcode_counts`: counts of individual barcodes from each region.
+- `data/results/oligo_counts`: counts of individual oligos from each region.
+- `data/results/barcode_mutant_counts`: counts of chimeric barcode mutants.
+- `data/results/oligo_mutant_counts`: counts of chimeric oligo mutants.
+- `data/results/enrichment_scores`: enrichment scores of chimeric oligo mutants.
     - **NOTE**: both naive and selected files for each sample must be present in `data/raw_fastq_files` for enrichment results.
+- `data/results/summary_tables`: merged file with enrichment and frequency data for each oligo mutant in each replicate.

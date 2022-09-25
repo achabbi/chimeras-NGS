@@ -7,8 +7,11 @@ SAMPLES = ['OBD1_naive',
             'OBD123finallibrary_naive']
 
 
-def names_plain(names):
+def names_enrichment(names):
     return [name.split('_')[0] for name in names]
+
+def names_summary(names):
+    return [name.split('replicate')[0] for name in names]
 
 
 rule all:
@@ -17,7 +20,8 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
-#        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_plain(SAMPLES))
+#        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES)),
+#        expand('data/results/summary_tables/{sample}_summary.csv', sample=names_summary(SAMPLES))
 
 
 rule filter_merge_sequences:
@@ -76,3 +80,22 @@ rule calculate_enrichments:
         'data/results/enrichment_scores/{sample}_enrichment.csv'
     script:
         'scripts/enrichment_scores.py'
+
+
+rule summary:
+    input:
+        'data/results/enrichment_scores/{sample}replicate1_enrichment.csv',
+        'data/results/enrichment_scores/{sample}replicate2_enrichment.csv',
+        'data/results/enrichment_scores/{sample}replicate3_enrichment.csv',
+
+        'data/results/oligo_mutant_counts/{sample}replicate1_naive_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}replicate2_naive_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}replicate3_naive_oligo_mutants.csv',
+
+        'data/results/oligo_mutant_counts/{sample}replicate1_selected_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}replicate2_selected_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}replicate3_selected_oligo_mutants.csv'
+    output:
+        'data/results/summary_tables/{sample}_summary.csv'
+    script:
+        'scripts/summary_table.py'

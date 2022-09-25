@@ -1,19 +1,13 @@
+import re
 import csv
 
-enrichment_file_rep1 = ''
-enrichment_file_rep2 = ''
-enrichment_file_rep3 = ''
-enrichment_files = [enrichment_file_rep1, enrichment_file_rep2, enrichment_file_rep3]
+summary_file = snakemake.output[0]
 
-mutants_naive_file_rep1 = ''
-mutants_naive_file_rep2 = ''
-mutants_naive_file_rep3 = ''
-mutants_naive_files = [mutants_naive_file_rep1, mutants_naive_file_rep2, mutants_naive_file_rep3]
+num_reps = max([int(re.compile(r"replicate(\d+)").search(file).group(1)) for file in snakemake.input])
 
-mutants_selected_file_rep1 = ''
-mutants_selected_file_rep2 = ''
-mutants_selected_file_rep3 = ''
-mutants_selected_files = [mutants_selected_file_rep1, mutants_selected_file_rep2, mutants_selected_file_rep3]
+enrichment_files = [file for file in snakemake.input[:num_reps]]
+mutants_naive_files = [file for file in snakemake.input[num_reps:2*num_reps]]
+mutants_selected_files = [file for file in snakemake.input[2*num_reps:3*num_reps]]
 
 # OBD1 ID, OBD2 ID, OBD3 ID, Naive Frequency Replicate 1, Naive Frequency Replicate 2, Naive Frequency Replicate 3, 
 # Selected Frequency Replicate 1, Selected Frequency Replicate 2, Selected Frequency Replicate 3, Enrichment Score Replicate 1,
@@ -51,20 +45,19 @@ for i in range(len(enrichment_files)):
                 except:
                     pass
 
-# data is loaded
 summary = []
 ids_checked = []
 
 for rep in enrichment_chimeras:
-    for ids, score in rep.items():
-
+    for ids in rep.keys():
         if ids in ids_checked:
             continue
 
         data_naive = {}
         data_selected = {}
+        enrichment = {}
 
-        for i in range(len(enrichment_chimeras)):
+        for i in range(len(enrichment_chimeras)): # checks mutants in each replicate
             try:
                 data_naive[i] = mutants_naive[i][ids]
             except:
@@ -74,13 +67,29 @@ for rep in enrichment_chimeras:
                 data_selected[i] = mutants_selected[i][ids]
             except:
                 data_selected[i] = ''
+
+            try:
+                enrichment[i] = enrichment_chimeras[i][ids]
+            except:
+                enrichment[i] = ''
         
-        enrichment_score = score
         ids_checked.append(ids)
 
+        row = [id for id in ids]
+        row.extend([data_naive[i] for i in range(len(data_naive))])
+        row.extend([data_selected[i] for i in range(len(data_selected))])
+        row.extend([enrichment[i] for i in range(len(enrichment))])
+        summary.append(row)
 
 
-    
+with open(summary_file, 'w') as csv_file:  
+        writer = csv.writer(csv_file)
+        writer.writerow(['OBD1 ID', 'OBD2 ID', 'OBD3 ID', 
+                        'Naive Frequency Replicate 1', 'Naive Frequency Replicate 2, Naive Frequency Replicate 3',
+                        'Selected Frequency Replicate 1', 'Selected Frequency Replicate 2, Selected Frequency Replicate 3',
+                        'Enrichment Score Replicate 1', 'Enrichment Score Replicate 2', 'Enrichment Score Replicate 3'])
+        for row in summary:
+            writer.writerow(row)
 
         
 
