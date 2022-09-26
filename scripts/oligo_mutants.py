@@ -11,6 +11,17 @@ def barcodes_present(seq, barcodes):
     return False
 
 
+def wt_present(seq):
+    wt = 'ATATAGTGAACCCCGCCCCATTGGCACCAGATACCTGACTCGTAATCTGTAATAATTGCTTGTTAATCAATAAACCGTTTAATTCGTTTCAGTTGAACTTTGGTCTCTGCGAAGGGCGAATTCGTTTAAACCTGC'
+
+    window = 20
+    for i in range(len(wt)-window):
+        subseq = wt[i:i+window]
+        if subseq in seq:
+            return True
+    return False
+
+
 if __name__ == "__main__":
     """
     Gets counts of each unique mutant formed by oligos instead of barcodes.
@@ -66,7 +77,7 @@ if __name__ == "__main__":
             seq = str(rec.seq)
             if k340h_barcode in seq:
                 k340h_count += 1
-            elif not barcodes_present(seq, barcodes):
+            elif not barcodes_present(seq, barcodes) and wt_present(seq):
                 wt_count += 1
             else:
                 pass
