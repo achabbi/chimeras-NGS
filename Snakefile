@@ -1,24 +1,22 @@
-SAMPLES = ['OBD1_naive',
-            'OBD12_naive', 
-            'OBD123A_naive', 
-            'OBD123B_naive', 
-            'OBD123repcapTA_naive', 
-            'OBD123repcapLW_naive', 
-            'OBD123finallibrary_naive']
-
+SAMPLES = ['OBDfinallibrary_replicate1_naive',
+            'OBDfinallibrary_replicate1_selected',
+            'OBDfinallibrary_replicate2_naive',
+            'OBDfinallibrary_replicate2_selected',
+            'OBDfinallibrary_replicate3_naive',
+            'OBDfinallibrary_replicate3_selected']
 
 
 def names_enrichment(names):
-    return [name.split('_')[0] for name in names]
+    return ['_'.join(name.split('_')[:2]) for name in names]
 
 def names_summary(names):
-    return [name.split('replicate')[0] for name in names]
+    return [name.split('_')[0] for name in names]
 
-def replicates_present(names):
-    for name in names:
-        if 'replicate' not in name:
-            return "expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))"
-    return "expand('data/results/summary_tables/{sample}_summary.csv', sample=names_summary(SAMPLES))"
+#def replicates_present(names):
+#    for name in names:
+#        if 'replicate' not in name:
+#            return "expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))"
+#    return str(expand('data/results/summary_tables/{sample}_summary.csv', sample=names_summary(SAMPLES)))
 
 
 rule all:
@@ -27,6 +25,7 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
+#        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 #        replicates_present(SAMPLES)
 
 

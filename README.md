@@ -22,13 +22,13 @@ $ conda install -c conda-forge biopython
     - Example: `SAMPLES = ['OBD12_naive', 'OBD123A_naive']` will run the pipeline on the following pairs of files from `data/raw_fastq_files`:
         - `OBD12_naive_R1.fastq.gz` and `OBD12_naive_R2.fastq.gz`
         - `OBD123A_naive_R1.fastq.gz` and `OBD123A_naive_R2.fastq.gz`
-    - If samples are in replicates (pipeline is currently configured for 3 replicates per sample), then the following naming convention should be used: `SAMPLES = ['OBD12replicate1_naive', 'OBD12replicate2_naive', 'OBD12replicate3_naive', 'OBD123Areplicate1_naive', 'OBD123Areplicate2_naive', 'OBD123Areplicate3_naive']`. The files in `data/raw_fastq_files` should be named accordingly:
-        - `OBD12replicate1_naive_R1.fastq.gz` and `OBD12_replicate1_naive_R2.fastq.gz`
-        - `OBD12replicate2_naive_R1.fastq.gz` and `OBD12_replicate2_naive_R2.fastq.gz`
-        - `OBD12replicate3_naive_R1.fastq.gz` and `OBD12_replicate3_naive_R2.fastq.gz`
-        - `OBD123Areplicate1_naive_R1.fastq.gz` and `OBD123Areplicate1_naive_R2.fastq.gz`
-        - `OBD123Areplicate2_naive_R1.fastq.gz` and `OBD123Areplicate2_naive_R2.fastq.gz`
-        - `OBD123Areplicate3_naive_R1.fastq.gz` and `OBD123Areplicate3_naive_R2.fastq.gz`
+    - If samples are in replicates (pipeline is currently configured for 3 replicates per sample), then the following naming convention should be used: `SAMPLES = ['OBD12_replicate1_naive', 'OBD12_replicate2_naive', 'OBD12_replicate3_naive', 'OBD123A_replicate1_naive', 'OBD123A_replicate2_naive', 'OBD123A_replicate3_naive']`. The files in `data/raw_fastq_files` should be named accordingly:
+        - `OBD12_replicate1_naive_R1.fastq.gz` and `OBD12_replicate1_naive_R2.fastq.gz`
+        - `OBD12_replicate2_naive_R1.fastq.gz` and `OBD12_replicate2_naive_R2.fastq.gz`
+        - `OBD12_replicate3_naive_R1.fastq.gz` and `OBD12_replicate3_naive_R2.fastq.gz`
+        - `OBD123A_replicate1_naive_R1.fastq.gz` and `OBD123A_replicate1_naive_R2.fastq.gz`
+        - `OBD123A_replicate2_naive_R1.fastq.gz` and `OBD123A_replicate2_naive_R2.fastq.gz`
+        - `OBD123A_replicate3_naive_R1.fastq.gz` and `OBD123A_replicate3_naive_R2.fastq.gz`
 
 ### Running the pipeline
 To run the pipeline, run the following commands:

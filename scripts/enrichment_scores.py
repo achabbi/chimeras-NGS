@@ -36,26 +36,30 @@ if __name__ == '__main__':
         reader = csv.reader(csvfile)
         for row in reader:
             try:
-                naive[(int(row[0]), int(row[1]), int(row[2]))] = int(row[4]) # assigns id combination to its count
+                naive[(int(row[0]), int(row[1]), int(row[2]))] = float(row[4]) # assigns id combination to its count
             except:
                 pass
+            
+            if row[0] == 'WT':
+                wt_naive_counts = float(row[4])
+            elif row[0] == 'K340H':
+                k340h_naive_counts = float(row[4])
 
-        wt_naive_counts = list(reader)[-2][3]
-        k340h_naive_counts = list(reader)[-1][3]
         
-
     with open(selected_mutants_file) as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
             try:
                 ids = (int(row[0]), int(row[1]), int(row[2]))
                 if ids in naive.keys():
-                    selected[ids] = int(row[4])
+                    selected[ids] = float(row[4])
             except:
                 pass
         
-        wt_selected_counts = list(reader)[-2][3]
-        k340h_selected_counts = list(reader)[-1][3]
+            if row[0] == 'WT':
+                wt_selected_counts = float(row[4])
+            elif row[0] == 'K340H':
+                k340h_selected_counts = float(row[4])
     
     L_wt = L(wt_naive_counts, wt_selected_counts, wt_naive_counts, wt_selected_counts)
     L_k340h = L(k340h_naive_counts, k340h_selected_counts, wt_naive_counts, wt_selected_counts)
