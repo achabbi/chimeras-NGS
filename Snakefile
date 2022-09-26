@@ -90,17 +90,17 @@ rule calculate_enrichments:
 
 rule summary:
     input:
-        'data/results/enrichment_scores/{sample}replicate1_enrichment.csv',
-        'data/results/enrichment_scores/{sample}replicate2_enrichment.csv',
-        'data/results/enrichment_scores/{sample}replicate3_enrichment.csv',
+        'data/results/enrichment_scores/{sample}_replicate1_enrichment.csv',
+        'data/results/enrichment_scores/{sample}_replicate2_enrichment.csv',
+        'data/results/enrichment_scores/{sample}_replicate3_enrichment.csv',
 
-        'data/results/oligo_mutant_counts/{sample}replicate1_naive_oligo_mutants.csv',
-        'data/results/oligo_mutant_counts/{sample}replicate2_naive_oligo_mutants.csv',
-        'data/results/oligo_mutant_counts/{sample}replicate3_naive_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}_replicate1_naive_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}_replicate2_naive_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}_replicate3_naive_oligo_mutants.csv',
 
-        'data/results/oligo_mutant_counts/{sample}replicate1_selected_oligo_mutants.csv',
-        'data/results/oligo_mutant_counts/{sample}replicate2_selected_oligo_mutants.csv',
-        'data/results/oligo_mutant_counts/{sample}replicate3_selected_oligo_mutants.csv'
+        'data/results/oligo_mutant_counts/{sample}_replicate1_selected_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}_replicate2_selected_oligo_mutants.csv',
+        'data/results/oligo_mutant_counts/{sample}_replicate3_selected_oligo_mutants.csv'
     output:
         'data/results/summary_tables/{sample}_summary.csv'
     script:

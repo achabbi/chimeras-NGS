@@ -12,10 +12,13 @@ $ conda install -c bioconda snakemake
 $ conda install -c bioconda fastp
 $ conda install -c conda-forge biopython
 ```
-4. Copy `fastq.gz` files to be processed into `data/raw_fastq_files`.
-5. Rename `fastq.gz` files to match naming convention `[name]_R1.fastq.gz` & `[name]_R2.fastq.gz`, where `[name]` is `[identifier]_naive` or `[identifier]_selected`.
+
+## Usage
+### Copying files and naming conventions
+1. Copy `fastq.gz` files to be processed into `data/raw_fastq_files`.
+2. Rename `fastq.gz` files to match naming convention `[name]_R1.fastq.gz` & `[name]_R2.fastq.gz`, where `[name]` is `[identifier]_naive` or `[identifier]_selected`.
     - Example file pair: `OBD123A_naive_R1.fastq.gz` and `OBD123A_naive_R2.fastq.gz`.
-6. Open `Snakefile`  and update `SAMPLES` list with only identifiers of names of all files to be processed.
+3. Open `Snakefile`  and update `SAMPLES` list with only identifiers of names of all files to be processed.
     - Example: `SAMPLES = ['OBD12_naive', 'OBD123A_naive']` will run the pipeline on the following pairs of files from `data/raw_fastq_files`:
         - `OBD12_naive_R1.fastq.gz` and `OBD12_naive_R2.fastq.gz`
         - `OBD123A_naive_R1.fastq.gz` and `OBD123A_naive_R2.fastq.gz`
@@ -27,7 +30,7 @@ $ conda install -c conda-forge biopython
         - `OBD123Areplicate2_naive_R1.fastq.gz` and `OBD123Areplicate2_naive_R2.fastq.gz`
         - `OBD123Areplicate3_naive_R1.fastq.gz` and `OBD123Areplicate3_naive_R2.fastq.gz`
 
-## Usage
+### Running the pipeline
 To run the pipeline, run the following commands:
 ```
 $ cd chimeras/
