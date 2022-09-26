@@ -27,7 +27,7 @@ $ conda install -c conda-forge biopython
         - `OBD123Areplicate2_naive_R1.fastq.gz` and `OBD123Areplicate2_naive_R2.fastq.gz`
         - `OBD123Areplicate3_naive_R1.fastq.gz` and `OBD123Areplicate3_naive_R2.fastq.gz`
 
-## Run pipeline
+## Usage
 To run the pipeline, run the following commands:
 ```
 $ cd chimeras/
