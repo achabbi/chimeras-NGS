@@ -1,5 +1,5 @@
-# chimeras
-[Snakemake](https://snakemake.github.io/) pipeline to simplify analysis of AAV Rep OBD chimera deep sequencing data.
+# chimeras-NGS
+[Snakemake](https://snakemake.github.io/) pipeline to streamline analysis of NGS deep sequencing data on AAV protein chimeras.
 
 ## Setup
 1. Run `git clone https://github.com/archit-c/chimeras.git` to clone repository.
