@@ -26,7 +26,7 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
-#        replicates_present(SAMPLES)
+#        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 
 
 rule filter_merge_sequences:
