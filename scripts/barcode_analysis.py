@@ -72,8 +72,10 @@ def check_combinations(data, barcodesfile, newfile):
 	Output: csv file with each row being a unique chimeric barcode sequence corresponding to its count
 	"""
 
+	total_counts = 0
 	barcodes = [[] for _ in range(3)]
 	for rec in SeqIO.parse(barcodesfile, 'fasta'):
+		total_counts += 1
 		region = int(rec.name.partition('region')[2][0])
 		barcodes[region-1].append(str(rec.seq))
 
@@ -99,9 +101,6 @@ def check_combinations(data, barcodesfile, newfile):
 				barcode_combos[seq_str] += count
 			else:
 				barcode_combos[seq_str] = count
-
-	
-	total_counts = sum(barcode_combos.values())
 	
 	with open(str(newfile), 'w') as csv_file:  
 		writer = csv.writer(csv_file)
