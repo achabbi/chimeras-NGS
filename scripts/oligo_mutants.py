@@ -72,8 +72,10 @@ if __name__ == "__main__":
     for rec in SeqIO.parse(barcodes_file, 'fasta'):
         barcodes.append(str(rec.seq))
 
+    total_counts = 0
     with gzip.open(reads_file, 'rt') as filename:
         for rec in SeqIO.parse(filename, 'fastq'):
+            total_counts += 1
             seq = str(rec.seq)
             if k340h_barcode in seq:
                 k340h_count += 1
@@ -82,9 +84,6 @@ if __name__ == "__main__":
             else:
                 pass
 
-
-    
-    total_counts = sum(mutants_dict.values()) + k340h_count + wt_count
 
     with open(file_path, 'w') as csv_file:  
         writer = csv.writer(csv_file)

@@ -36,8 +36,10 @@ def check_unique_barcodes(data, barcodesfile, region_num, newfile):
 	"""
 
 	unique_barcodes = {}
+	total_counts = 0
 	barcodes = [[] for _ in range(3)]
 	for rec in SeqIO.parse(barcodesfile, 'fasta'):
+		total_counts += 1
 		region = int(rec.name.partition('region')[2][0])
 		barcodes[region-1].append(str(rec.seq))
 
@@ -49,8 +51,6 @@ def check_unique_barcodes(data, barcodesfile, region_num, newfile):
 					unique_barcodes[barcode] += count
 				else:
 					unique_barcodes[barcode] = count
-	
-	total_counts = sum(unique_barcodes.values())
 
 	with open(str(newfile), 'w') as csv_file:  
 		writer = csv.writer(csv_file)

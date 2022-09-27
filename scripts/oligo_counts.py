@@ -26,9 +26,11 @@ if __name__ == "__main__":
         barcode_dict[entry[0]] = int(entry[1])
 
     oligo_counts = {}
+    total_counts = 0
     for rec in SeqIO.parse(barcodes_file, 'fasta'):
         id = int(re.compile(r"barcode(\d+)_").search(rec.name).group(1))
         seq = str(rec.seq)
+        total_counts += 1
 
         if seq in barcode_dict.keys():
             count = barcode_dict[seq]
@@ -37,8 +39,6 @@ if __name__ == "__main__":
                 oligo_counts[id] += count
             else:
                 oligo_counts[id] = count
-    
-    total_counts = sum(oligo_counts.values())
     
     with open(file_path, 'w') as csv_file:  
         writer = csv.writer(csv_file)
