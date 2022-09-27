@@ -2,7 +2,7 @@
 [Snakemake](https://snakemake.github.io/) pipeline to streamline analysis of NGS deep sequencing data on AAV protein chimeras.
 
 ## Setup
-1. Run `git clone https://github.com/archit-c/chimeras.git` to clone repository.
+1. Run `git clone https://github.com/archit-c/chimeras-NGS.git` to clone repository.
 2. Install [conda](https://conda.io/projects/conda/en/latest/user-guide/install/index.html#regular-installation).
 3. Run the following commands to create conda environment and install required packages:
 ```
@@ -33,7 +33,7 @@ $ conda install -c conda-forge biopython
 ### Running the pipeline
 To run the pipeline, run the following commands:
 ```
-$ cd chimeras/
+$ cd chimeras-NGS/
 $ conda activate chimeras
 $ snakemake --cores
 ```
