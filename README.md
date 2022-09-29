@@ -31,7 +31,7 @@ $ conda install -c conda-forge biopython
         - `OBD123A_replicate3_naive_R1.fastq.gz` and `OBD123A_replicate3_naive_R2.fastq.gz`
 
 ### Running the pipeline
-To run the pipeline, run the following commands:
+To run the pipeline from the home directory, run the following commands:
 ```
 $ cd chimeras-NGS/
 $ conda activate chimeras
