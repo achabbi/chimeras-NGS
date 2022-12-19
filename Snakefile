@@ -1,9 +1,4 @@
-SAMPLES = ['OBDfinallibrary_replicate1_naive',
-            'OBDfinallibrary_replicate1_selected',
-            'OBDfinallibrary_replicate2_naive',
-            'OBDfinallibrary_replicate2_selected',
-            'OBDfinallibrary_replicate3_naive',
-            'OBDfinallibrary_replicate3_selected']
+SAMPLES = ['C1']
 
 
 def names_enrichment(names):
