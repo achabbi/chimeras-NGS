@@ -2,5 +2,3 @@
 data/logs/*
 .snakemake/
 .DS_Store
-
-data/results/*

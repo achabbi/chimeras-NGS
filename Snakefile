@@ -1,4 +1,9 @@
-SAMPLES = ['C1']
+SAMPLES = ['ON1',
+            'ON2',
+            'ON3',
+            'OS1',
+            'OS2',
+            'OS3']
 
 
 def names_enrichment(names):
