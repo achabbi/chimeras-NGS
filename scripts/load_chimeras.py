@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     with open(file_path, 'w') as csv_file:  
         writer = csv.writer(csv_file)
-        writer.writerow(['OBD1 ID', 'OBD2 ID', 'OBD3 ID', 'region_1', 'region_2', 'region_3', 'region_4', 'region_5', 'region_6', 'region_7', 'region_7', 'region_8', 'region_8',
+        writer.writerow(['OBD1 ID', 'OBD2 ID', 'OBD3 ID', 'region_1', 'region_2', 'region_3', 'region_4', 'region_5', 'region_6', 'region_7', 'region_8',
                             'region_9', 'region_10', 'region_11', 'contacts_broken', 'chimera_distance', 'barcode_distance', 'frequency'])
 
         for row1 in mutants_data[1:-2]:
