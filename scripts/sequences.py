@@ -5,7 +5,6 @@ import random
 import csv
 import math
 import requests
-from tqdm import tqdm
 
 
 amino_acids = {'CYS': 'C', 'ASP': 'D', 'SER': 'S', 'GLN': 'Q', 'LYS': 'K',
@@ -89,7 +88,7 @@ def modify_alignment(pdbfile, main_chain, alignment):
 
 
 def read_crossover_points():
-	f = open("crossover_points.txt", "r")
+	f = open("metadata/crossover_points.txt", "r")
 	t = f.read()
 	f.close()
 	

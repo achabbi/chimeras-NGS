@@ -25,6 +25,7 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
+        expand('data/results/chimera_counts/{sample}_chimera_counts.csv', sample=SAMPLES),
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 
@@ -75,6 +76,15 @@ rule get_oligo_mutant_counts:
         'data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv'
     script:
         'scripts/oligo_mutants.py'
+
+
+rule get_chimera_counts:
+    input:
+        'data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv'
+    output:
+        'data/results/chimera_counts/{sample}_chimera_counts.csv'
+    script:
+        'scripts/load_chimeras.py'
 
 
 rule calculate_enrichments:
