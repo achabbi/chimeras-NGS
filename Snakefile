@@ -1,5 +1,7 @@
-SAMPLES = ['1O',
-            '2O']
+SAMPLES = ['S4_191',
+            'S4_192',
+            'S5_191',
+            'S5_192']
 
 
 def names_enrichment(names):
@@ -21,7 +23,7 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
-#        expand('data/results/chimera_counts/{sample}_chimera_counts.csv', sample=SAMPLES),
+        expand('data/results/chimera_counts/{sample}_chimera_counts.csv', sample=SAMPLES),
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 
