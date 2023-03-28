@@ -5,7 +5,7 @@ summary_file = snakemake.output[0]
 
 num_reps = max([int(re.compile(r"replicate(\d+)").search(file).group(1)) for file in snakemake.input])
 
-enrichment_files = [file for file in snakemake.input[:num_reps]]
+# enrichment_files = [file for file in snakemake.input[:num_reps]]
 mutants_naive_files = [file for file in snakemake.input[num_reps:2*num_reps]]
 mutants_selected_files = [file for file in snakemake.input[2*num_reps:3*num_reps]]
 

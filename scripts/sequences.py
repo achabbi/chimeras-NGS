@@ -333,11 +333,6 @@ def get_fragment_points(regions_file, alignment, temp_raw_alignment):
 			lower = region[0]
 			upper = region[1]
 
-			# smarter way of doing this:
-			# 1. go through each region in conserved_regions
-			# 2. measure its ("upper") distance to the calculated length
-			# 3. use index with min distance to fragment
-
 			target = (fragment_len*len(fragment_points))+fragment_len
 			distance = abs(upper - target)
 
@@ -352,14 +347,6 @@ def get_fragment_points(regions_file, alignment, temp_raw_alignment):
 				if len(fragment_points) + 1 == num_fragments:
 					points_found = True
 					break
-
-
-#			if upper in range((fragment_len*len(fragment_points))+fragment_len-buffer, (fragment_len*len(fragment_points))+fragment_len+buffer):
-#				fragment_points.append(upper)
-#				if len(fragment_points) + 1 == num_fragments:
-#					points_found = True
-#					break
-#			^^^^^^^***NOTE***: this is the old way of fragmenting (uses a buffer thing)
 
 		if not points_found:
 			unusable_lens.append(fragment_len)

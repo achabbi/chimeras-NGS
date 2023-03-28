@@ -1,7 +1,6 @@
-SAMPLES = ['S4_191',
-            'S4_192',
-            'S5_191',
-            'S5_192']
+SAMPLES = ['1n', '2n', '3n', 
+            '1i', '2i', '3i',
+            'N1', 'N2', 'N3']
 
 
 def names_enrichment(names):
@@ -23,7 +22,7 @@ rule all:
         expand('data/results/oligo_counts/{sample}_BC2_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_counts/{sample}_BC3_oligo_counts.csv', sample=SAMPLES),
         expand('data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv', sample=SAMPLES),
-        expand('data/results/chimera_counts/{sample}_chimera_counts.csv', sample=SAMPLES),
+#        expand('data/results/chimera_counts/{sample}_chimera_counts.csv', sample=SAMPLES),
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 #        expand('data/results/enrichment_scores/{sample}_enrichment.csv', sample=names_enrichment(SAMPLES))
 
@@ -83,6 +82,14 @@ rule get_chimera_counts:
         'data/results/chimera_counts/{sample}_chimera_counts.csv'
     script:
         'scripts/load_chimeras.py'
+
+rule make_table:
+    input:
+        'data/results/oligo_mutant_counts/{sample}_oligo_mutants.csv'
+    output:
+        'data/results/table.csv'
+    script:
+        'scripts/table.py'
 
 
 rule calculate_enrichments:
